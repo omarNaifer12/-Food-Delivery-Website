@@ -1,4 +1,4 @@
-const foodModel =require( "../models/foodModule");
+const foodModel =require( "../models/foodModel");
 const fs= require( "fs");
 const path=require("path");
 const foodController={
@@ -66,7 +66,7 @@ updateFood:async (req, res) => {
         const oldImagePath = path.join(__dirname, '..', 'uploads', food.image);
   
         fs.unlink(oldImagePath,() =>{});
-        
+
         image = newImage;
         
     }
