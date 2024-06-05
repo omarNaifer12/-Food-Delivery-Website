@@ -10,10 +10,10 @@ const storage = multer.diskStorage({
       cb(null, Date.now() + '-' + file.originalname);
     }
   });
-  
-  const upload = multer({ storage: storage });
-
+  const upload =multer({ storage:storage});
 
 foodRouter.post("/add",upload.single("image"),foodController.addFood);
 foodRouter.get("/all",foodController.getFood);
+foodRouter.delete("/:id",foodController.deleteFood);
+foodRouter.put("/:id",upload.single("image"),foodController.updateFood);
 module.exports=foodRouter
