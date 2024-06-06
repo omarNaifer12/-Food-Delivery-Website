@@ -5,13 +5,14 @@ const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState({});
-  const [token, setToken] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NjE4MGZkMWJmNDhhZWM0YzQyZmM4MSIsImlhdCI6MTcxNzY2ODI1MX0.M8njU0klqGb5tTr9qOXYeBBGUIlFgD2Yer_KpUQ7deU");
+  const [token, setToken] = useState(localStorage.getItem("token")?localStorage.getItem("token"):"");
   const [items, setItems] = useState([]);
 
   
   useEffect(() => {
-    fetchItems();
     fetchCartData();
+    fetchItems();
+    
   }, []);
 
   const fetchItems = async () => {
@@ -25,7 +26,7 @@ const CartProvider = ({ children }) => {
   };
 
   const fetchCartData = async () => {
-   
+   if(token!==""){
     try {
    console.log("tke,n is ",token);
         const response = await axios.post('http://localhost:3000/api/cart/get',null,{
@@ -41,12 +42,13 @@ console.log("res is ",response.data.cartData);
     } catch (error) {
       console.error('Error fetching cart data:', error);
     }
+}
   };
 
 
 
   return (
-    <CartContext.Provider value={{ cartData, setCartData, token, items }}>
+    <CartContext.Provider value={{ cartData, setCartData, token, items,fetchCartData,fetchItems }}>
       {children}
     </CartContext.Provider>
   );

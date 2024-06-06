@@ -5,13 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import './allItems.css';
 
 const AllItems = () => {
-    const {items,token} = useContext(CartContext);
-    const [quantities,setQuantities] = useState({});
-
+    const {items,token,cartData, fetchCartData,fetchItems} = useContext(CartContext);
+    const [quantities,setQuantities] = useState(cartData);
+const handleLogout=()=>{
+  localStorage.removeItem("token");
+  fetchItems();
+}
 
 const navigate = useNavigate();
   
-  
+
        
  const handleClickAdd = (id) => {
       
@@ -28,7 +31,9 @@ const navigate = useNavigate();
                   ...prevQuantities,
                   [id]: prevQuantities[id]===undefined?1: prevQuantities[id]+1
               }));
+              fetchCartData();
           }
+         
       })
       .catch(error => console.error('Error adding to cart:', error));
   };
@@ -46,7 +51,9 @@ const navigate = useNavigate();
               ...prevQuantities,
               [id]: prevQuantities[id]>0?prevQuantities[id]- 1:0
           }));
-      }
+          fetchCartData();
+        }
+       
   })
   .catch(error => console.error('Error adding to cart:', error));
 
@@ -65,11 +72,14 @@ const navigate = useNavigate();
                         <button onClick={()=>navigate("/cart")}>add</button>
                             <img src="cart-icon.png" alt="Cart" />
                             <span className="cart-count" >
-                                {Object.values(quantities).reduce((acc, qty) => acc + qty, 0)}
+                                {Object.values(cartData).reduce((acc, qty) => acc + qty, 0)}
                             </span>
                         </div>
+                        <button onClick={()=>navigate("/sign")}>log</button>
+                        <button onClick={handleLogout}>log out</button>
+
                         <div className="login">
-                            <a href="#">Login</a>
+                            <a href="#" >Login</a>
                         </div>
                     </div>
                 </nav>
@@ -85,11 +95,13 @@ const navigate = useNavigate();
                                 <p className="price">${item.price}</p>
                                 <p className="category">Category: {item.category}</p>
                                 <p className="description">{item.description}</p>
-                                <div className="quantity-controls">
-                                    <button className="circle-btn" onClick={() => handleClickDelete(item._id)}>-</button>
-                                    <span className="quantity">{quantities[item._id]}</span>
-                                    <button className="circle-btn" onClick={() => handleClickAdd(item._id)}>+</button>
-                                </div>
+                                {token && (
+    <div className="quantity-controls">
+        <button className="circle-btn" onClick={() => handleClickDelete(item._id)}>-</button>
+        <span className="quantity">{cartData[item._id]}</span>
+        <button className="circle-btn" onClick={() => handleClickAdd(item._id)}>+</button>
+    </div>
+)}
                             </div>
                         </div>
                     ))}
