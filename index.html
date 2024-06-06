@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Table</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cart-container">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="item-image.jpg" alt="Item Image" class="item-image"></td>
+                    <td>Item Title</td>
+                    <td>$25</td>
+                    <td>2</td>
+                    <td>$50</td>
+                    <td><button class="remove-btn">*</button></td>
+                </tr>
+                <!-- Repeat for more items -->
+            </tbody>
+        </table>
+        
+        <div class="cart-summary">
+            <div class="summary-item">
+                <span>Subtotal:</span>
+                <span>$50</span>
+            </div>
+            <div class="summary-item">
+                <span>Delivery Fee:</span>
+                <span>$5</span>
+            </div>
+            <div class="summary-item total">
+                <span>Total:</span>
+                <span>$55</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

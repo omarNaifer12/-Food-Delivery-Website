@@ -43,10 +43,7 @@ res.status(500).json({success:false,message:"error cart"})
         res.status(500).json({ success: false, message: "Error removing from cart" });
     }
  }
-
-
-
- const getCart=async (req,res)=>{
+  const getCart=async (req,res)=>{
     console.log("the user has ", req.body.userId);
 
     try {

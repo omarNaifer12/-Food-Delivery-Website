@@ -1,6 +1,7 @@
 const express=require("express");
 const multer=require("multer");
-const foodController =require("../controllers/foodController")
+const foodController =require("../controllers/foodController");
+const path=require("path");
 const foodRouter=express.Router();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -10,8 +11,10 @@ const storage = multer.diskStorage({
       cb(null, Date.now() + '-' + file.originalname);
     }
   });
-  const upload =multer({ storage:storage});
+  const uploadsPath = path.join(__dirname,'../uploads');
 
+  const upload =multer({ storage:storage});
+  foodRouter.use('/uploads', express.static(uploadsPath));
 foodRouter.post("/add",upload.single("image"),foodController.addFood);
 foodRouter.get("/all",foodController.getFood);
 foodRouter.delete("/:id",foodController.deleteFood);
