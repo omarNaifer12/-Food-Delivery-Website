@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
-
+import './FoodFormPage.css'
 const FoodFormPage = ({ food }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -12,7 +10,7 @@ const FoodFormPage = ({ food }) => {
     image: null,
   });
 
-  const { id } = useParams();
+
 
   useEffect(() => {
     if (food) {
@@ -52,7 +50,7 @@ const FoodFormPage = ({ food }) => {
       data.append(key, formData[key]);
     }
 
-    axios.put(`http://localhost:3000/api/food/${id}`, data)
+    axios.put(`http://localhost:3000/api/food/${food._id}`, data)
       .then(() => {
      
       })
@@ -76,8 +74,8 @@ const handleClick=(e)=>{
 }
   return (
     <div className="food-form">
-      <h1>{id ? 'Edit' : 'Add'} Food Item</h1>
-      <form onSubmit={id ? handleUpdate : handleAdd}>
+      <h1>{food ? 'Edit' : 'Add'} Food Item</h1>
+      <form onSubmit={food ? handleUpdate : handleAdd}>
         <div className="form-group">
           <label>Name</label>
           <input type="text" name="name" value={formData.name} onChange={handleChange} required />

@@ -61,7 +61,7 @@ if(edit==="edit"){
                 <img src={`http://localhost:3000/api/food/uploads/${food.image}`} alt={food.name} className="food-image" />
               </td>
               <td>{food.name}</td>
-              <td>{food.price}</td>
+              <td>${food.price}</td>
               <td>{food.description}</td>
               <td>{food.category}</td>
               <td>

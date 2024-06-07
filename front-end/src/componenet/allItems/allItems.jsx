@@ -3,19 +3,21 @@ import axios from 'axios';
 import {CartContext} from '../context/storeContext';
 import { useNavigate } from 'react-router-dom';
 import './allItems.css';
-
+import {assets} from "../../assets/assets"
 const AllItems = () => {
     const {items,token,cartData, fetchCartData,fetchItems} = useContext(CartContext);
     const [quantities,setQuantities] = useState(cartData);
+    const[itemsForSearch,setItemsForSearch]=useState(items);
 const handleLogout=()=>{
   localStorage.removeItem("token");
   fetchItems();
+  alert("log out success");
 }
 
 const navigate = useNavigate();
   
 
-       
+
  const handleClickAdd = (id) => {
       
   
@@ -64,22 +66,22 @@ const navigate = useNavigate();
                 <nav>
                     <div className="logo">Food Delivery</div>
                     <div className="search-bar">
-                        <input type="text" placeholder="Search for food..." />
-                        <button>Search</button>
+                        <input  type="text" placeholder="Search for food..." />
+                        <button >Search</button>
                     </div>
                     <div className="user-actions">
-                        <div className="cart">
-                        <button onClick={()=>navigate("/cart")}>add</button>
-                            <img src="cart-icon.png" alt="Cart" />
+                        <div onClick={()=>navigate("/cart")} className="cart">
+                      
+                            <img  src={assets.cart_icon}alt="Cart" />
                             <span className="cart-count" >
                                 {Object.values(cartData).reduce((acc, qty) => acc + qty, 0)}
                             </span>
                         </div>
-                        <button onClick={()=>navigate("/sign")}>log</button>
+                       
                         <button onClick={handleLogout}>log out</button>
 
-                        <div className="login">
-                            <a href="#" >Login</a>
+                        <div  onClick={()=>navigate("/sign") }className="login">
+                            <a  href="#" >Login</a>
                         </div>
                     </div>
                 </nav>

@@ -1,9 +1,9 @@
 import React, { useState,useContext } from 'react';
 import './cartTable.css';
 import { CartContext } from '../context/storeContext';
-
+import axios from "axios"
 const CartTable = () => {
-    const { items, cartData } = useContext(CartContext);
+    const { items, cartData,fetchCartData,token } = useContext(CartContext);
     const calculateTotalPrice = () => {
       let total = 0;
       items.forEach(item => {
@@ -13,6 +13,24 @@ const CartTable = () => {
       });
       return total;
   };
+    const handleClickDelete=(id)=>{
+   
+    axios.post('http://localhost:3000/api/cart/remove', { itemId: id }, {
+      headers: {
+          token: token
+      }
+  })
+  .then(response => {
+      console.log(response.data);
+      if (response.data.success) {
+         
+          fetchCartData();
+        }
+       
+  })
+  .catch(error => console.error('Error adding to cart:', error));
+
+  }
     return (
         <div className="cart-container">
             <table className="cart-table">
@@ -39,7 +57,7 @@ const CartTable = () => {
                                     <td>{cartData[item._id]}</td>
                                     <td>${item.price*cartData[item._id]}</td>
                                     <td>
-                                        <button className="remove-btn">*</button>
+                                        <button onClick={()=>handleClickDelete(item._id)} className="remove-btn">*</button>
                                     </td>
                                 </tr>
                             );
