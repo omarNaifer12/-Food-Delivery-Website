@@ -9,6 +9,7 @@ const signLogIn = () => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const{fetchItems}=useContext(CartContext);
+    
     const signup = async () => {
         try {
             const response = await axios.post('http://localhost:3000/api/user/registor', {
@@ -18,6 +19,7 @@ const signLogIn = () => {
             });
 
             const { token } = response.data;
+            
             localStorage.setItem('token', token);
             alert('Sign up successful!');
             // Redirect or further actions after signup
@@ -35,6 +37,7 @@ const signLogIn = () => {
             });
 
             const { token } = response.data;
+            
             localStorage.setItem('token', token);
             alert('log in successful!');
             // Redirect or further actions after signup
@@ -50,10 +53,11 @@ const signLogIn = () => {
             login();
             fetchItems();
         } else {
-            // Add signup logic here
+            
             signup();
             fetchItems();
         }
+      
     };
 
     const toggleAuthMode = () => {
@@ -105,7 +109,7 @@ const signLogIn = () => {
                     <button type="submit" className="auth-btn">{isLogin ? 'Login' : 'Sign Up'}</button>
                 </form>
                 <div className="toggle-link" onClick={toggleAuthMode}>
-                    {isLogin ? 'Don\'t have an account? Sign Up' : 'Already have an account? Login'}
+                    {isLogin ?'Don\'t have an account? Sign Up' : 'Already have an account? Login'}
                 </div>
             </div>
         </div>

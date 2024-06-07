@@ -5,12 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import './allItems.css';
 import {assets} from "../../assets/assets"
 const AllItems = () => {
-    const {items,token,cartData, fetchCartData,fetchItems} = useContext(CartContext);
+    const {items,token,cartData, fetchCartData,fetchItems,setToken,setCartData} = useContext(CartContext);
     const [quantities,setQuantities] = useState(cartData);
     const[itemsForSearch,setItemsForSearch]=useState(items);
 const handleLogout=()=>{
   localStorage.removeItem("token");
+  setToken("");
+  setCartData({});
   fetchItems();
+
   alert("log out success");
 }
 
@@ -99,8 +102,8 @@ const navigate = useNavigate();
                                 <p className="description">{item.description}</p>
                                 {token && (
     <div className="quantity-controls">
-        <button className="circle-btn" onClick={() => handleClickDelete(item._id)}>-</button>
-        <span className="quantity">{cartData[item._id]}</span>
+       {cartData[item._id]&&( <button className="circle-btn" onClick={() => handleClickDelete(item._id)}>-</button>)}
+        <span className="quantity">{cartData[item._id]?cartData[item._id]:0}</span>
         <button className="circle-btn" onClick={() => handleClickAdd(item._id)}>+</button>
     </div>
 )}

@@ -48,7 +48,7 @@ console.log("res is ",response.data.cartData);
 
 
   return (
-    <CartContext.Provider value={{ cartData, setCartData, token, items,fetchCartData,fetchItems,setItems }}>
+    <CartContext.Provider value={{ cartData,setCartData, setCartData, token, items,fetchCartData,fetchItems,setItems,setToken }}>
       {children}
     </CartContext.Provider>
   );
