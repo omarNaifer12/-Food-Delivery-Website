@@ -2,7 +2,6 @@ const userModel=require("../models/userModel");
 const addToCart=async(req,res)=>{
     console.log("the user has ",req.body.userId);
     console.log("the item has ",req.body.itemId);
-
 try{
 const userData=await userModel.findById(req.body.userId);
 const cartData=await userData.cartData;
