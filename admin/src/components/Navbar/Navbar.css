@@ -1,0 +1,32 @@
+/* Navbar.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color:white; /* Adjust as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .logo {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+  }
+  
+  .profile {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Ensure square dimensions for consistency */
+    border-radius: 50%; /* Round the profile image */
+  }
+  
+  /* Hover effect for profile image */
+  .profile:hover {
+    transform: scale(1.1); /* Scale up on hover */
+  }
+  
+  /* Transition effect for smooth scaling */
+  .profile {
+    transition: transform 0.2s ease-in-out;
+  }
+  

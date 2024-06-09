@@ -1,0 +1,58 @@
+/* Container for the entire header */
+.header {
+    height: 34vw;
+    margin: 30px 100px ;
+    background: url('/header_img.png') no-repeat center center;
+    background-size: cover; /* Ensures the background image covers the entire header */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Ensures text is readable on the background image */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    border-radius: 10px; /* Rounds the corners of the header */
+    overflow: hidden; /* Ensures no overflow is visible */
+}
+
+/* Container for the header contents */
+.header-contents {
+    max-width: 800px; /* Limits the width of the content for better readability */
+    padding: 20px;
+    /* Adds a semi-transparent background for better text visibility */
+    border-radius: 10px;
+}
+
+/* Main heading styling */
+.header-contents h2 {
+    font-size: 3em; /* Makes the heading large and prominent */
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif; /* Sets a clean, modern font */
+    letter-spacing: 1px; /* Adds spacing between letters for readability */
+}
+
+/* Paragraph styling */
+.header-contents p {
+    font-size: 1.5em; /* Increases font size for better readability */
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif; /* Matches the font with the heading */
+}
+
+/* Button styling */
+.header-contents button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6347; /* Sets a standout background color */
+    color: white; /* Ensures the text is readable */
+    cursor: pointer;
+    font-size: 1.2em; /* Makes the button text larger */
+    font-family: 'Arial', sans-serif; /* Matches the font with the rest of the content */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Adds smooth transition effects */
+}
+
+/* Button hover effect */
+.header-contents button:hover {
+    background-color: #e5533c; /* Darkens the background color on hover */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+}
