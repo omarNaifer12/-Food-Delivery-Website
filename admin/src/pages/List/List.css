@@ -1,0 +1,81 @@
+/* Root Container */
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  /* Header */
+  .list > p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Table Container */
+  .list-table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+  }
+  
+  /* Table Header */
+  .list-table-format {
+    display: grid;
+    grid-template-columns: 100px 2fr 2fr 1fr 50px;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Table Rows */
+  .list-table-format:not(:first-child) {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .list-table-format img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .list-table-format p {
+    margin: 0;
+    padding: 10px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+  }
+  
+  /* Delete Button */
+  .list-table-format p:last-child {
+    text-align: center;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  /* Hover Effects */
+  .list-table-format:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .list-table-format p:last-child:hover {
+    color: darkred;
+  }
+  

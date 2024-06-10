@@ -6,18 +6,15 @@
      /* Text color */
     padding-top: 20px; /* Add some padding from the top */
   }
-  
   .sidebar-options {
     padding: 1rem; /* Add padding to separate options from the edge */
   }
-  
   .sidebar-option {
     display: flex;
     align-items: center;
     margin-bottom: 1rem; /* Add space between options */
     cursor: pointer; /* Change cursor to pointer on hover */
   }
-  
   .sidebar-option img {
     width: 24px; /* Adjust icon size as needed */
     height: 24px;
