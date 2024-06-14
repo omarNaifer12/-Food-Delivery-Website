@@ -1,58 +1,106 @@
-import React from 'react'
-import './PlaceOrder.css'
-import { useContext } from 'react'
-import { StoringContext } from '../../context/StoreContex'
-
+import React, { useState, useContext } from 'react';
+import './PlaceOrder.css';
+import { StoringContext } from '../../context/StoreContex';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios"
 const PlaceOrder = () => {
-   const{getTotalCartAmout}=useContext(StoringContext)
-  return (
-    <div>
-        <form className='place-order'>
-            <div className='place-order-left'>
-                <p className='title'>Delivery information</p>
-                <div className='multi-fields'>
-                    <input type='text' placeholder='First name'/>
-                    <input type='text' placeholder='Last name'/>
+  const { getTotalCartAmout, token, food_list, cartItem, url } = useContext(StoringContext);
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    phone: ""
+  });
 
-                </div>
-                <input type='email' placeholder='Email address'/>
-                <input type='text' placeholder='Street'/>
-                <div className='multi-fields'>
-                    <input type='text' placeholder='City'/>
-                    <input type='text' placeholder='State'/>
+  const navigate = useNavigate();
 
-                </div>
-                <div className='multi-fields'>
-                    <input type='text' placeholder='Zip code'/>
-                    <input type='text' placeholder='Country'/>
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+const placeOrder= async(e)=>{
+    
+    e.preventDefault();
+    console.log("datais",data);
+    let orderItems=[];
+    food_list.map((item)=>{
+        if(cartItem[item._id]>0){
+         let   letInfo=item;
+            letInfo["quantity"]=cartItem[item._id];
+            orderItems.push(letInfo);
+        }
+    })
+  let orderData={
+    address:data,
+    amount:getTotalCartAmout()+2,
+    items:orderItems,
+  }
+ 
 
-                </div>
-                <input type='text' placeholder='phone'/>
-            </div>
-            <div className='place-order-left'>
-            <div className='cart-total'>
-<h2>total cart</h2>
-<div className='cart-total-details'>
-<p>subtotal</p>
-<p>${getTotalCartAmout()}</p>
-</div>
-<hr />
-<div className='cart-total-details'>
-<p>delivery fee</p>
-<p>${2}</p>
-</div>
-<hr />
-<div className='cart-total-details'>
-<p>total</p>
-<p>${getTotalCartAmout()+2}</p>
-</div>
-<button onClick={()=>navigate('/order')} >proceed To checkout</button>
-    </div>
-            </div>
-
-        </form>
-    </div>
-  )
+  let response=await axios.post(url+"/api/order/place",orderData,{headers:{token}});
+ 
+  if(response.data.success){
+   
+    const {session_url}=response.data;
+    window.location.replace(session_url);
+  }
+  else{
+    alert("error");
+  }
 }
 
-export default PlaceOrder
+  return (
+    <div>
+      <form onSubmit={placeOrder} className='place-order' >
+        <div className='place-order-left'>
+          <p className='title'>Delivery information</p>
+          <div className='multi-fields'>
+            <input  required type='text' name='firstName' placeholder='First name' value={data.firstName} onChange={handleChange} />
+            <input required  type='text' name='lastName' placeholder='Last name' value={data.lastName} onChange={handleChange} />
+          </div>
+          <input  required type='email' name='email' placeholder='Email address' value={data.email} onChange={handleChange} />
+          <input  required type='text' name='street' placeholder='Street' value={data.street} onChange={handleChange} />
+          <div className='multi-fields'>
+            <input  required type='text' name='city' placeholder='City' value={data.city} onChange={handleChange} />
+            <input type='text' name='state' placeholder='State' value={data.state} onChange={handleChange} />
+          </div>
+          <div className='multi-fields'>
+            <input required  type='text' name='zipcode' placeholder='Zip code' value={data.zipcode} onChange={handleChange} />
+            <input required  type='text' name='country' placeholder='Country' value={data.country} onChange={handleChange} />
+          </div>
+          <input  required type='text' name='phone' placeholder='Phone' value={data.phone} onChange={handleChange} />
+        </div>
+        <div className='place-order-right'>
+          <div className='cart-total'>
+            <h2>Total Cart</h2>
+            <div className='cart-total-details'>
+              <p>Subtotal</p>
+              <p>${getTotalCartAmout()}</p>
+            </div>
+            <hr />
+            <div className='cart-total-details'>
+              <p>Delivery Fee</p>
+              <p>$2</p>
+            </div>
+            <hr />
+            <div className='cart-total-details'>
+              <p>Total</p>
+              <p>${getTotalCartAmout() + 2}</p>
+            </div>
+            <button  type='submit'>Proceed to payement</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default PlaceOrder;
