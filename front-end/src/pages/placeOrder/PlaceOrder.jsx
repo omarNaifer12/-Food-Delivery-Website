@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './PlaceOrder.css';
 import { StoringContext } from '../../context/StoreContex';
-import { useNavigate } from 'react-router-dom';
+
 import axios from "axios"
 const PlaceOrder = () => {
   const { getTotalCartAmout, token, food_list, cartItem, url } = useContext(StoringContext);
@@ -10,14 +10,14 @@ const PlaceOrder = () => {
     lastName: "",
     email: "",
     street: "",
-    city: "",
+    city:"",
     state: "",
     zipcode: "",
     country: "",
     phone: ""
   });
 
-  const navigate = useNavigate();
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,9 +33,9 @@ const placeOrder= async(e)=>{
     let orderItems=[];
     food_list.map((item)=>{
         if(cartItem[item._id]>0){
-         let   letInfo=item;
-            letInfo["quantity"]=cartItem[item._id];
-            orderItems.push(letInfo);
+        let   letInfo=item;
+        letInfo["quantity"]=cartItem[item._id];
+        orderItems.push(letInfo);
         }
     })
   let orderData={
@@ -43,17 +43,15 @@ const placeOrder= async(e)=>{
     amount:getTotalCartAmout()+2,
     items:orderItems,
   }
- 
-
   let response=await axios.post(url+"/api/order/place",orderData,{headers:{token}});
- 
-  if(response.data.success){
-   
+
+  if(response.data.success){ 
     const {session_url}=response.data;
     window.location.replace(session_url);
   }
   else{
-    alert("error");
+    const {session_url}=response.data;
+    window.location.replace(session_url);
   }
 }
 

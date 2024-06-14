@@ -18,21 +18,21 @@ console.log("is saived good",newOrder);
 await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
 const line_items=req.body.items.map((item)=>({
     price_data:{
-        currency:"usd",
+        currency:"inr",
         product_data:{
             name:item.name
         },
-        unit_amount:item.price*100,
+        unit_amount:item.price*100*80,
     },
     quantity:item.quantity
 }))
 line_items.push({
     price_data:{
-        currency:"usd",
+        currency:"inr",
     product_data:{
         name:"Delivery Charges"
     },
-    unit_amount:2*100
+    unit_amount:2*100*80
     },
     quantity:1
 })
@@ -41,13 +41,10 @@ const session=await stripe.checkout.sessions.create({
     line_items:line_items,
     mode:"payment",
     success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-    cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
-    payment_method_options: {
-        card: {
-            request_three_d_secure: 'any',
-        },
-    },
+    cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`
+   
 })
+console.log("session is ",session.url);
 res.json({success:true,session_url:session.url});
 }
 catch(error){
@@ -59,12 +56,15 @@ const verifyOrder=async(req,res)=>{
 const {orderId,success}=req.body;
 try{
 if(success==="true"){
-    await orderModeml.findByIdAndUpdate(orderId,{payment:true});
+    await orderModeml.findByIdAndUpdate(orderId,{payement:true});
+    console.log("order is",orderId,"success is",success);
     res.status(200).json({success:true,message:"paid"});
 }
 else{
     await orderModeml.findByIdAndDelete(orderId);
-    res.status(400).json({success:false,message:"not paid"});
+    console.log("delete order is",orderId,"success is",success);
+
+    res.status(201).json({success:false,message:"not paid"});
 }
 }
 catch(error){
@@ -73,4 +73,14 @@ res.status(500).json({success:false,message:"error"});
 
 }
 }
-module.exports={placeOrder,verifyOrder};
+const userOrder= async(req,res)=>{
+try{
+const orders=await orderModeml.find({userId:req.body.userId0});
+res.status(200).json({success:true,data:orders});
+}
+catch(error){
+    console.log(error);
+    res.status(500).json({success:false,message:"error"})
+}
+}
+module.exports={placeOrder,verifyOrder,userOrder};
