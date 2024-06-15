@@ -4,7 +4,7 @@ require("dotenv").config();
 const Stripe=require("stripe");
 const stripe=new Stripe(process.env.STRIPE_SECRET_KEY);
 const placeOrder=async(req,res)=>{
-    const frontend_url="http://localhost:5173";
+    const frontend_url="http://localhost:5174";
 try{
 const newOrder=new orderModeml({
     userId:req.body.userId,
@@ -75,7 +75,7 @@ res.status(500).json({success:false,message:"error"});
 }
 const userOrder= async(req,res)=>{
 try{
-const orders=await orderModeml.find({userId:req.body.userId0});
+const orders=await orderModeml.find({userId:req.body.userId});
 res.status(200).json({success:true,data:orders});
 }
 catch(error){
@@ -83,4 +83,25 @@ catch(error){
     res.status(500).json({success:false,message:"error"})
 }
 }
-module.exports={placeOrder,verifyOrder,userOrder};
+const listOrder= async(req,res)=>{
+    try{
+    const orders=await orderModeml.find();
+    res.status(200).json({success:true,data:orders});
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({success:false,message:"error"})
+    }
+    }
+    
+const updateStatus=async(req,res)=>{
+    try{
+         await orderModeml.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
+         res.status(200).json({success:true,message:"status updated"});
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).json({success:false,message:"error"})
+    }
+}
+module.exports={placeOrder,verifyOrder,userOrder,listOrder,updateStatus};

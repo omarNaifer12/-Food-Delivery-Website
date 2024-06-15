@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './PlaceOrder.css';
 import { StoringContext } from '../../context/StoreContex';
 
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 const PlaceOrder = () => {
   const { getTotalCartAmout, token, food_list, cartItem, url } = useContext(StoringContext);
   const [data, setData] = useState({
@@ -16,8 +17,15 @@ const PlaceOrder = () => {
     country: "",
     phone: ""
   });
-
- 
+const navigate=useNavigate();
+ useEffect(()=>{
+if(!token){
+    navigate("/");
+}
+else if(getTotalCartAmout()===0){
+    navigate("/cart");  
+}
+ },[token])
 
   const handleChange = (e) => {
     const { name, value } = e.target;

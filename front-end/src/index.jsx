@@ -9,6 +9,7 @@ import './index.css'
 import { useState } from 'react';
 import LoginPopup from './components/LoginPopup/LoginPopup';
 import Verify from './pages/verify/verify';
+import MyOrders from './pages/MyOrders/MyOrders';
 const index = () => {
     const[showLogin,setShowLogin]=useState(false);
   return (
@@ -24,6 +25,7 @@ const index = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<PlaceOrder />} />
 <Route path='/verify' element={<Verify />}/>
+<Route path='/myorder' element={<MyOrders />} />
       </Routes>
     </div>
     <Footer />

@@ -18,10 +18,13 @@ if(response.data.success){
 }
 }
 useEffect(()=>{
+    
     verifyPayment();
 },[]);
     return (
-    <div>verify</div>
+    <div className='verify'>
+       <div className='spinner'></div> 
+    </div>
   )
 }
 
